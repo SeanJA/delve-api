@@ -23,7 +23,7 @@ $d->report_media();
 			<?php echo $r->times_plays; ?>
 		</td>
 		<td>
-			<?php echo fuzzy_span(time() - $r->total_time_viewed); ?>
+			<?php echo time_wasted($r->total_time_viewed); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
