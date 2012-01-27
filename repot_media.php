@@ -23,7 +23,9 @@ $d->report_media();
 			<?php echo $r->times_plays; ?>
 		</td>
 		<td>
-			<?php echo time_wasted($r->total_time_viewed); ?>
+			<span title="<?php echo $r->total_time_viewed ?>">
+				<?php echo time_wasted($r->total_time_viewed); ?>
+			</span>
 		</td>
 	</tr>
 <?php endforeach; ?>

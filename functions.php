@@ -11,6 +11,43 @@ function __autoload($class) {
 	include ROOT . '/classes/' . $class;
 }
 function time_wasted($milliseconds) {
-	$span = sprintf("%d hours, %d minutes and %d seconds\n", (int) $milliseconds / (1000 * 60 * 60), (int) $milliseconds / (1000 * 60), (int) $milliseconds / 1000);
-	return $span;
+	
+	//there is probably a nicer way to do this...
+	$seconds = floor($milliseconds / 1000);
+	$years = floor($seconds / YEAR);
+	$seconds -= ($years * YEAR);
+	$months = floor($seconds / MONTH);
+	$seconds -= ($months * MONTH);
+	$weeks = floor($seconds / WEEK);
+	$seconds -= ($weeks * WEEK);
+	$days = floor($seconds / DAY);
+	$seconds -= ($days * DAY);
+	$hours = floor($seconds / HOUR);
+	$seconds -= ($hours * HOUR);
+	$minutes = floor($seconds / MINUTE);
+	$seconds -= ($minutes * MINUTE);
+	
+	$return = '';
+	if($years){
+		$return .= $years .' years '; 
+	}
+	if($months){
+		$return .= $months .' months '; 
+	}
+	if($weeks){
+		$return .= $weeks .' weeks '; 
+	}
+	if($days){
+		$return .= $days .' days '; 
+	}
+	if($hours){
+		$return .= $hours .' hours '; 
+	}
+	if($minutes){
+		$return .= $minutes .' minutes '; 
+	}
+	if($seconds){
+		$return .= $seconds .' seconds '; 
+	}
+	return $return;
 }
