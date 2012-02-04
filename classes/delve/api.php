@@ -7,12 +7,14 @@ class delve_api {
 	public $org_id = "";
 	public $format = 'json';
 	public $response = null;
+	//5 mins default
+	protected $cache_time = 300;
 
 	public function __construct() {
 		
 	}
 
-	protected function get_request($query, $params = array()) {
+	protected function get_request($query, $params = array(), $cache=true) {
 		if($this->is_cached($query)){
 			$response = $this->get_cached($query);
 		} else {
@@ -20,7 +22,9 @@ class delve_api {
 
 			$signed_get_usage_info_url = Delve_Auth::authenticate_request("GET", $url, $this->access_key, $this->secret, $params);
 			$response = file_get_contents($signed_get_usage_info_url);
-			$this->cache_result($query, $response);
+			if($cache){
+				$this->cache_result($query, $response);
+			}
 		}
 		return $this->response = $this->decode($response);
 	}
@@ -30,7 +34,12 @@ class delve_api {
 	}
 	
 	private function is_cached($query){
-		return file_exists(ROOT.'/cache/'.md5($query));
+		$file = ROOT.'/cache/'.md5($query);
+		$cached = file_exists(ROOT.'/cache/'.md5($query)) && ((filectime(ROOT.'/cache/'.md5($query)) - time()) < $this->cache_time);
+		if(!$cached){
+			@unlink($file);
+		}
+		return $cached;
 	}
 	
 	private function get_cached($query){

@@ -2,6 +2,8 @@
 
 class delve_analytics extends delve_api {
 	public $prefix = '/analytics/';
+	//1 hour
+	protected $cache_time = 3600;
 	public function __call($name, $arguments) {
 		$name = strtolower($name);
 		$query = $this->prefix.str_replace('_', '/', $name);
