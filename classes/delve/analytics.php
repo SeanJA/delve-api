@@ -1,6 +1,6 @@
 <?php
 
-class delve_analytics extends delve_api {
+class delve_analytics extends delve_authenticated {
 	public $prefix = '/analytics/';
 	//1 hour
 	protected $cache_time = 3600;
