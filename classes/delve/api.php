@@ -29,11 +29,11 @@ class delve_api {
 		return $this->response = $this->decode($response);
 	}
 	
-	private function cache_result($query,$result){
+	protected function cache_result($query,$result){
 		file_put_contents(ROOT.'/cache/'.md5($query), $result);
 	}
 	
-	private function is_cached($query){
+	protected function is_cached($query){
 		$file = ROOT.'/cache/'.md5($query);
 		$cached = file_exists(ROOT.'/cache/'.md5($query)) && ((filectime(ROOT.'/cache/'.md5($query)) - time()) < $this->cache_time);
 		if(!$cached){
@@ -42,11 +42,11 @@ class delve_api {
 		return $cached;
 	}
 	
-	private function get_cached($query){
+	protected function get_cached($query){
 		return file_get_contents(ROOT.'/cache/'.md5($query));
 	}
 
-	public function decode($response) {
+	protected function decode($response) {
 		switch ($this->format) {
 			case 'json':
 				return json_decode($response);
