@@ -18,7 +18,7 @@ class delve_api {
 		if($this->is_cached($query)){
 			$response = $this->get_cached($query);
 		} else {
-			$url = 'http://api.delvenetworks.com/rest/organizations/' . $this->org_id . $query . '.' . $this->format;
+			$url = 'http://api.videoplatform.limelight.com/rest/organizations/' . $this->org_id . $query . '.' . $this->format;
 
 			$signed_get_usage_info_url = Delve_Auth::authenticate_request("GET", $url, $this->access_key, $this->secret, $params);
 			$response = file_get_contents($signed_get_usage_info_url);
